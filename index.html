@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal — Login &amp; Registration</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+</head>
+<body class="login-page">
+
+  <div class="login-container">
+    <div class="login-card">
+
+      <!-- ===== Header ===== -->
+      <div class="login-header" style="margin-bottom: var(--space-5);">
+        <img src="assets/logo.svg" alt="University Logo" class="login-header__logo">
+        <h1 class="login-header__title">Student Portal</h1>
+        <p class="login-header__subtitle" id="auth-subtitle">Sign in to your account</p>
+      </div>
+
+      <!-- ===== Auth Mode Tabs (Sign In / Register) ===== -->
+      <div class="tabs" style="justify-content: center; margin-bottom: var(--space-5);">
+        <button type="button" class="tab-btn active" id="tab-signin">Sign In</button>
+        <button type="button" class="tab-btn" id="tab-register">Register</button>
+      </div>
+
+      <!-- ===== Error Message ===== -->
+      <div class="login-error" id="login-error">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <span id="login-error-text">Invalid credentials.</span>
+      </div>
+
+      <!-- ===== Login Form ===== -->
+      <form class="login-form" id="login-form" autocomplete="off">
+
+        <!-- Role Selector -->
+        <div class="role-selector" id="role-selector">
+          <label class="role-chip active">
+            <input type="radio" name="role" value="student" checked>
+            Student
+          </label>
+          <label class="role-chip">
+            <input type="radio" name="role" value="faculty">
+            Faculty
+          </label>
+          <label class="role-chip">
+            <input type="radio" name="role" value="admin">
+            Admin
+          </label>
+        </div>
+
+        <!-- UID Field -->
+        <div class="form-group" id="uid-group">
+          <label class="form-label" for="uid-input">Student UID</label>
+          <div class="form-input-icon">
+            <span class="form-input-icon__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" class="form-input" id="uid-input" placeholder="e.g. 22BCS10045" required>
+          </div>
+          <span class="form-error">Please enter your UID</span>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group" id="password-group">
+          <label class="form-label" for="password-input">Password</label>
+          <div class="form-input-icon password-wrapper">
+            <span class="form-input-icon__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" class="form-input" id="password-input" placeholder="Enter your password" required>
+            <button type="button" class="password-toggle" id="password-toggle" aria-label="Toggle password visibility">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <span class="form-error">Please enter your password</span>
+        </div>
+
+        <!-- Remember Me / Forgot Password -->
+        <div class="login-options">
+          <label class="remember-me">
+            <input type="checkbox" id="remember-check"> Remember me
+          </label>
+          <a href="#" class="forgot-link" id="forgot-link">Forgot Password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn--primary btn--block" id="login-btn">
+          Sign In
+        </button>
+
+        <!-- Demo Quick-Fill Helper -->
+        <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-bg); border-radius: var(--radius-md); font-size: var(--text-xs); color: var(--color-text-secondary); display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);">
+          <span>Demo: <strong>22BCS10045</strong> / <strong>student123</strong></span>
+          <button type="button" class="btn btn--outline btn--sm" id="demo-fill-btn">Auto-Fill</button>
+        </div>
+      </form>
+
+      <!-- ===== Registration Form (Hidden by Default) ===== -->
+      <form class="login-form" id="register-form" autocomplete="off" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Full Name</label>
+          <input type="text" class="form-input" id="reg-name" placeholder="e.g. Priya Verma" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-uid">University UID</label>
+          <input type="text" class="form-input" id="reg-uid" placeholder="e.g. 22BCS10099" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-email">University Email</label>
+          <input type="email" class="form-input" id="reg-email" placeholder="e.g. priya.verma@university.edu" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Create Password</label>
+          <input type="password" class="form-input" id="reg-password" placeholder="Minimum 6 characters" required>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">
+          Create Student Account
+        </button>
+      </form>
+
+      <!-- ===== Footer ===== -->
+      <div class="login-footer">
+        &copy; 2026 University Student Portal &middot; All Rights Reserved
+      </div>
+
+    </div><!-- /.login-card -->
+  </div><!-- /.login-container -->
+
+  <!-- ===== Forgot Password Modal ===== -->
+  <div class="modal-overlay" id="forgot-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title">Reset Password</h3>
+        <button class="modal__close" data-modal-close>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-5)">
+          Enter your registered UID and we'll send a password reset link to your registered email.
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="forgot-uid">Student UID</label>
+          <input type="text" class="form-input" id="forgot-uid" placeholder="e.g. 22BCS10045">
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" data-modal-close>Cancel</button>
+        <button class="btn btn--primary" id="forgot-submit-btn">Send Reset Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Scripts ===== -->
+  <script src="js/data/mockData.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/toast.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      // If already logged in, go to dashboard
+      var existing = sessionStorage.getItem('portal_session');
+      if (existing) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var tabSignIn   = document.getElementById('tab-signin');
+        var tabRegister = document.getElementById('tab-register');
+        var loginForm   = document.getElementById('login-form');
+        var regForm     = document.getElementById('register-form');
+        var subtitle    = document.getElementById('auth-subtitle');
+        var errorBox    = document.getElementById('login-error');
+        var errorTxt    = document.getElementById('login-error-text');
+
+        /* ---- Sign In / Register Tab Switcher ---- */
+        tabSignIn.addEventListener('click', function () {
+          tabSignIn.classList.add('active');
+          tabRegister.classList.remove('active');
+          loginForm.style.display = 'block';
+          regForm.style.display = 'none';
+          subtitle.textContent = 'Sign in to your account';
+          errorBox.classList.remove('is-visible');
+        });
+
+        tabRegister.addEventListener('click', function () {
+          tabRegister.classList.add('active');
+          tabSignIn.classList.remove('active');
+          loginForm.style.display = 'none';
+          regForm.style.display = 'block';
+          subtitle.textContent = 'Create a new student account';
+          errorBox.classList.remove('is-visible');
+        });
+
+        /* ---- Role Selector ---- */
+        var roleChips = document.querySelectorAll('.role-chip');
+        roleChips.forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            roleChips.forEach(function (c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            var role = chip.querySelector('input').value;
+            var uidLabel = document.querySelector('[for="uid-input"]');
+            if (uidLabel) {
+              uidLabel.textContent = role === 'student' ? 'Student UID' :
+                                     role === 'faculty' ? 'Faculty ID' : 'Admin ID';
+            }
+          });
+        });
+
+        /* ---- Demo Auto-Fill Button ---- */
+        var demoBtn = document.getElementById('demo-fill-btn');
+        if (demoBtn) {
+          demoBtn.addEventListener('click', function () {
+            var role = document.querySelector('.role-chip.active input').value;
+            var cred = CREDENTIALS.find(function (c) { return c.role === role; }) || CREDENTIALS[0];
+            document.getElementById('uid-input').value = cred.uid;
+            document.getElementById('password-input').value = cred.password;
+            errorBox.classList.remove('is-visible');
+          });
+        }
+
+        /* ---- Password Toggle ---- */
+        var pwToggle = document.getElementById('password-toggle');
+        var pwInput  = document.getElementById('password-input');
+        if (pwToggle && pwInput) {
+          pwToggle.addEventListener('click', function () {
+            var isPassword = pwInput.type === 'password';
+            pwInput.type = isPassword ? 'text' : 'password';
+            pwToggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+          });
+        }
+
+        /* ---- Login Form Submission ---- */
+        loginForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var uid  = document.getElementById('uid-input').value.trim();
+          var pw   = document.getElementById('password-input').value;
+          var role = document.querySelector('.role-chip.active input').value;
+
+          errorBox.classList.remove('is-visible');
+          document.getElementById('uid-group').classList.remove('form-group--error');
+          document.getElementById('password-group').classList.remove('form-group--error');
+
+          var hasError = false;
+          if (!uid) {
+            document.getElementById('uid-group').classList.add('form-group--error');
+            hasError = true;
+          }
+          if (!pw) {
+            document.getElementById('password-group').classList.add('form-group--error');
+            hasError = true;
+          }
+          if (hasError) return;
+
+          var result = window.PortalAuth.login(uid, pw, role);
+          if (result) {
+            errorTxt.textContent = result;
+            errorBox.classList.add('is-visible');
+            var card = document.querySelector('.login-card');
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = 'shake 0.4s ease';
+          }
+        });
+
+        /* ---- Registration Form Submission ---- */
+        regForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var name  = document.getElementById('reg-name').value.trim();
+          var uid   = document.getElementById('reg-uid').value.trim();
+          var email = document.getElementById('reg-email').value.trim();
+          var pw    = document.getElementById('reg-password').value;
+
+          errorBox.classList.remove('is-visible');
+          var result = window.PortalAuth.register(name, uid, email, pw, 'student');
+          if (result) {
+            errorTxt.textContent = result;
+            errorBox.classList.add('is-visible');
+            var card = document.querySelector('.login-card');
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = 'shake 0.4s ease';
+          }
+        });
+
+        /* ---- Forgot Password ---- */
+        var forgotLink = document.getElementById('forgot-link');
+        forgotLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.PortalModal.open('forgot-modal');
+        });
+
+        var forgotSubmit = document.getElementById('forgot-submit-btn');
+        forgotSubmit.addEventListener('click', function () {
+          var uid = document.getElementById('forgot-uid').value.trim();
+          if (!uid) {
+            document.getElementById('forgot-uid').classList.add('form-input--error');
+            return;
+          }
+          if (window.PortalToast) {
+            window.PortalToast.success('Reset link sent to email for UID: ' + uid + ' (Demo)');
+          }
+          window.PortalModal.close('forgot-modal');
+        });
+      });
+    })();
+  </script>
+
+  <style>
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-6px); }
+      80%      { transform: translateX(6px); }
+    }
+  </style>
+
+</body>
+</html>
